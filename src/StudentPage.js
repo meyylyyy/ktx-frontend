@@ -4,15 +4,6 @@ function StudentPage() {
   return (
     <div className="student-container">
 
-      {/* MENU */}
-      <div className="menu">
-        <button>Quản lý phòng</button>
-        <button>Quản lý sinh viên</button>
-        <button>Hóa đơn</button>
-        <button>Tìm kiếm</button>
-        <button>Tổng quan</button>
-      </div>
-
       <div className="content">
 
         {/* LEFT */}

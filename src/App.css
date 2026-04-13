@@ -1,3 +1,37 @@
+.top-menu {
+  background: #4ade80;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.menu-left button {
+  background: #e5e7eb;
+  border: none;
+  padding: 10px 15px;
+  margin-right: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.menu-left button:hover {
+  background: #d1d5db;
+}
+
+.menu-right button {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.menu-right button:hover {
+  background: #dc2626;
+}
 .App {
   text-align: center;
 }
