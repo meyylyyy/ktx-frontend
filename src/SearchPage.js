@@ -1,96 +1,52 @@
-import { useState } from "react";
 import "./SearchPage.css";
 
 function SearchPage() {
-  const [maSV, setMaSV] = useState("");
-  const [maPhong, setMaPhong] = useState("");
-
-  const [students, setStudents] = useState([]);
-  const [rooms, setRooms] = useState([]);
-
-  // 🔍 search sinh viên
-  const searchStudent = () => {
-    fetch(`http://localhost:5000/api/students/${maSV}`)
-      .then(res => res.json())
-      .then(data => setStudents(data));
-  };
-
-  // 🔍 search phòng
-  const searchRoom = () => {
-    fetch(`http://localhost:5000/api/rooms/${maPhong}`)
-      .then(res => res.json())
-      .then(data => setRooms(data));
-  };
-
   return (
-    <div className="search-container">
+    <div className="main-container search-page">
 
-      <div className="content">
-
-        {/* LEFT */}
-        <div className="left-panel">
-          <h3>Thông tin</h3>
-          <p>Họ tên: Nguyễn Văn A</p>
-        </div>
-
-        {/* RIGHT */}
-        <div className="right-panel">
-
-          <h2>TÌM KIẾM</h2>
-
-          <div className="search-box">
-
-            {/* SEARCH SV */}
-            <div className="box">
-              <h4>Tìm theo Mã SV</h4>
-              <input
-                placeholder="Nhập mã SV"
-                value={maSV}
-                onChange={(e) => setMaSV(e.target.value)}
-              />
-              <div className="btn-group">
-                <button onClick={searchStudent}>🔍 Tìm kiếm</button>
-                <button onClick={() => setStudents([])}>🔄 Làm mới</button>
-              </div>
-            </div>
-
-            {/* SEARCH ROOM */}
-            <div className="box">
-              <h4>Tìm theo Mã phòng</h4>
-              <input
-                placeholder="Nhập mã phòng"
-                value={maPhong}
-                onChange={(e) => setMaPhong(e.target.value)}
-              />
-              <div className="btn-group">
-                <button onClick={searchRoom}>🔍 Tìm kiếm</button>
-                <button onClick={() => setRooms([])}>🔄 Làm mới</button>
-              </div>
-            </div>
-
-          </div>
-
-          {/* TABLE */}
-          <div className="table-wrapper">
-
-            <div className="table">
-              <h4>Sinh viên</h4>
-              {students.map(s => (
-                <p key={s.id}>{s.name} - {s.phone}</p>
-              ))}
-            </div>
-
-            <div className="table">
-              <h4>Phòng</h4>
-              {rooms.map(r => (
-                <p key={r.id}>{r.ten_phong}</p>
-              ))}
-            </div>
-
-          </div>
-
-        </div>
+      
+      <div className="sidebar">
+        <h3>Thông tin</h3>
+        <div className="info-item">👤 Nguyễn Văn A</div>
+        <div className="info-item">🎓 CNTT1</div>
+        <div className="info-item">🆔 123456</div>
       </div>
+
+      
+      <div className="content">
+        <h2>TÌM KIẾM</h2>
+
+        <div className="search-grid">
+
+         
+          <div className="search-box">
+            <h4> Tìm theo Mã SV</h4>
+            <input className="input-dark" placeholder="Nhập mã SV..." />
+            <div className="btn-group">
+              <button className="btn-primary">Tìm</button>
+              <button className="btn-secondary">Reset</button>
+            </div>
+          </div>
+
+          
+          <div className="search-box">
+            <h4> Tìm theo Mã phòng</h4>
+            <input className="input-dark" placeholder="Nhập mã phòng..." />
+            <div className="btn-group">
+              <button className="btn-primary">Tìm</button>
+              <button className="btn-secondary">Reset</button>
+            </div>
+          </div>
+
+        </div>
+
+        
+        <div className="table-box">
+          <p className="empty">Kết quả sẽ hiển thị ở đây</p>
+        </div>
+
+      </div>
+
     </div>
   );
 }

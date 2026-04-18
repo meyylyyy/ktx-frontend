@@ -2,76 +2,45 @@ import "./StudentPage.css";
 
 function StudentPage() {
   return (
-    <div className="student-container">
+    <div className="main-container student-page">
 
+      
+      <div className="sidebar">
+        <h3>Thông tin</h3>
+
+        <div className="info-item"> Nguyễn Văn A</div>
+        <div className="info-item"> CNTT1</div>
+        <div className="info-item"> 123456</div>
+      </div>
+
+      
       <div className="content">
+        <h2>QUẢN LÝ SINH VIÊN</h2>
 
-        {/* LEFT */}
-        <div className="left-panel">
-          <h3>Thông tin</h3>
-          <p>Họ tên: Nguyễn Văn A</p>
-          <p>Lớp: CNTT1</p>
-          <p>Mã SV: 123456</p>
-        </div>
+        <div className="form-grid">
 
-        {/* RIGHT */}
-        <div className="right-panel">
+          <input className="input-dark" placeholder="Mã SV" />
+          <input className="input-dark" placeholder="Họ tên" />
 
-          <h2>THÊM, XÓA, SỬA SINH VIÊN</h2>
+          <input className="input-dark" placeholder="CMND" />
+          <input className="input-dark" placeholder="SĐT" />
 
-          <div className="form-wrapper">
-
-            {/* THÔNG TIN SV */}
-            <div className="form-box">
-              <h4>Thông tin sinh viên</h4>
-
-              <div className="form-grid">
-                <label>Mã SV:</label><input />
-                <label>Họ SV:</label><input />
-
-                <label>Mã KTX:</label><input />
-                <label>Tên SV:</label><input />
-
-                <label>CMND:</label><input />
-                <label>SĐT:</label><input />
-
-                <label>Ngày sinh:</label><input type="date" />
-                <label>Giới tính:</label><input type="checkbox" /> Nam
-
-                <label>Mã phòng:</label><input />
-                <label>Quê quán:</label><input />
-              </div>
-            </div>
-
-            {/* NGƯỜI GIÁM HỘ */}
-            <div className="form-box">
-              <h4>Thông tin người giám hộ</h4>
-
-              <div className="form-grid">
-                <label>Họ tên NGH:</label><input />
-                <label>SĐT:</label><input />
-
-                <label>Mối quan hệ:</label><input />
-                <label>Nghề nghiệp:</label><input />
-              </div>
-            </div>
-
-          </div>
-
-          {/* BUTTON */}
-          <div className="btn-group">
-            <button>➕ Thêm</button>
-            <button>❌ Xóa</button>
-            <button>✏️ Sửa</button>
-            <button>📋 Hiển thị</button>
-          </div>
-
-          {/* TABLE */}
-          <div className="table">
-            (Danh sách sinh viên hiển thị ở đây)
-          </div>
+          <input className="input-dark" placeholder="Ngày sinh" />
+          <input className="input-dark" placeholder="Quê quán" />
 
         </div>
+
+        <div className="btn-group">
+          <button>Thêm</button>
+          <button>Xóa</button>
+          <button>Sửa</button>
+          <button>Hiển thị</button>
+        </div>
+
+        <div className="table-box">
+          <p className="empty">Chưa có dữ liệu</p>
+        </div>
+
       </div>
     </div>
   );

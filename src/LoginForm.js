@@ -54,11 +54,14 @@ function LoginForm({ onLogin }) {
 
         
         <div className="options">
-          <label>
-            <input type="checkbox" /> Remember me
-          </label>
-          <a href="/">Forgot Password?</a>
-        </div>
+  <label className="remember">
+    <input type="checkbox" />
+    <span className="checkmark"></span>
+    Remember me
+  </label>
+
+  <a href="/">Forgot Password?</a>
+</div>
 
         
         <button className="login-btn" onClick={handleLogin}>
