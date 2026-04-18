@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./LoginForm.css";
+import { FaUser, FaLock } from "react-icons/fa";
 
 function LoginForm({ onLogin }) {
   const [user, setUser] = useState({
@@ -15,47 +16,55 @@ function LoginForm({ onLogin }) {
   };
 
   const handleLogin = () => {
-    fetch("http://localhost:5000/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(user)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          onLogin();
-        } else {
-          alert("Sai tài khoản hoặc mật khẩu");
-        }
-      });
+    onLogin(); // test ก่อน
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h2>ĐĂNG NHẬP HỆ THỐNG</h2>
+    <div className="container">
+      <div className="card">
 
-        <div className="form-group">
-          <label>USER :</label>
-          <input name="username" onChange={handleChange} />
+        
+        <div className="avatar">
+          <FaUser />
         </div>
 
-        <div className="form-group">
-          <label>Password :</label>
-          <input type="password" name="password" onChange={handleChange} />
+        
+        <h2 className="title">ĐĂNG NHẬP HỆ THỐNG</h2>
+
+        
+        <div className="input-group">
+          <span><FaUser /></span>
+          <input
+            name="username"
+            placeholder="User"
+            onChange={handleChange}
+          />
         </div>
 
-        <div className="button-group">
-          <button className="login-btn" onClick={handleLogin}>
-            🔓 Đăng nhập
-          </button>
-
-          <button className="exit-btn" onClick={() => window.close()}>
-            ⛔ Thoát
-          </button>
+        
+        <div className="input-group">
+          <span><FaLock /></span>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+          />
         </div>
+
+        
+        <div className="options">
+          <label>
+            <input type="checkbox" /> Remember me
+          </label>
+          <a href="/">Forgot Password?</a>
+        </div>
+
+        
+        <button className="login-btn" onClick={handleLogin}>
+          LOGIN
+        </button>
+
       </div>
     </div>
   );
