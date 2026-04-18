@@ -7,7 +7,7 @@ import SearchPage from "./SearchPage";
 import BillPage from "./BillPage";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [page, setPage] = useState("room");
 
   if (!loggedIn) {
@@ -17,11 +17,11 @@ function App() {
   return (
     <div className="app-wrapper">
 
-      {/* TOP MENU */}
+      
       <div className="top-menu">
         <div className="menu-left">
 
-          {/* ❌ ลบ active ออก */}
+          
           <button onClick={() => setPage("room")}>
             Quản lý phòng
           </button>
@@ -45,7 +45,7 @@ function App() {
         </div>
       </div>
 
-      {/* CONTENT */}
+      
       <div className="page-center">
         {page === "room" && <RoomPage />}
         {page === "student" && <StudentPage />}
