@@ -1,170 +1,303 @@
 import "./BillPage.css";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function BillPage() {
+
   const [bills, setBills] = useState([]);
 
-  const [form, setForm] = useState({
-    id: "",
-    ma_phong: "",
-    month: "",
-    electric: "",
-    water: ""
-  });
+  const [maPhong, setMaPhong] = useState("");
+  const [month, setMonth] = useState("");
+  const [electric, setElectric] = useState("");
+  const [water, setWater] = useState("");
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+  const [editId, setEditId] = useState(null);
+
+  // HIỂN THỊ
+
+  const fetchBills = async () => {
+
+    try {
+
+      const res = await axios.get(
+        "http://localhost:5000/api/bills"
+      );
+
+      setBills(res.data);
+
+    } catch (err) {
+
+      console.log(err);
+
+      alert("Lỗi hiển thị dữ liệu");
+    }
   };
 
-  
-  const getBills = () => {
-    fetch("http://localhost:5000/api/bills")
-      .then(res => res.json())
-      .then(data => setBills(data));
+  // THÊM
+
+  const handleAdd = async () => {
+
+    try {
+
+      await axios.post(
+        "http://localhost:5000/api/bills",
+        {
+          ma_phong: maPhong,
+          month: month,
+          electric: electric,
+          water: water
+        }
+      );
+
+      alert("Lưu thành công");
+
+      fetchBills();
+
+      clearForm();
+
+    } catch (err) {
+
+      console.log(err);
+
+      alert("Lỗi thêm dữ liệu");
+    }
   };
 
-  
-  const addBill = () => {
-    fetch("http://localhost:5000/api/bills", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form)
-    }).then(() => {
-      alert("Đã lưu");
-      getBills();
-    });
+  // CHỌN DỮ LIỆU
+
+  const handleSelect = (bill) => {
+
+    setEditId(bill.id);
+
+    setMaPhong(bill.ma_phong);
+    setMonth(bill.month);
+    setElectric(bill.electric);
+    setWater(bill.water);
   };
 
- 
-  const deleteBill = () => {
-    if (!form.id) return alert("Chọn dòng trước");
+  // SỬA
 
-    fetch(`http://localhost:5000/api/bills/${form.id}`, {
-      method: "DELETE"
-    }).then(() => {
-      alert("Đã xóa");
-      getBills();
-    });
+  const handleUpdate = async () => {
+
+    if (!editId) {
+
+      alert("Hãy chọn hóa đơn");
+
+      return;
+    }
+
+    try {
+
+      await axios.put(
+        `http://localhost:5000/api/bills/${editId}`,
+        {
+          ma_phong: maPhong,
+          month: month,
+          electric: electric,
+          water: water
+        }
+      );
+
+      alert("Sửa thành công");
+
+      fetchBills();
+
+      clearForm();
+
+    } catch (err) {
+
+      console.log(err);
+
+      alert("Lỗi sửa dữ liệu");
+    }
   };
 
-  // UPDATE
-  const updateBill = () => {
-    if (!form.id) return alert("Chọn dòng trước");
+  // XÓA
 
-    fetch(`http://localhost:5000/api/bills/${form.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form)
-    }).then(() => {
-      alert("Đã sửa");
-      getBills();
-    });
+  const handleDelete = async () => {
+
+    if (!editId) {
+
+      alert("Hãy chọn hóa đơn");
+
+      return;
+    }
+
+    try {
+
+      await axios.delete(
+        `http://localhost:5000/api/bills/${editId}`
+      );
+
+      alert("Xóa thành công");
+
+      fetchBills();
+
+      clearForm();
+
+    } catch (err) {
+
+      console.log(err);
+
+      alert("Lỗi xóa dữ liệu");
+    }
   };
 
-  
-  const resetForm = () => {
-    setForm({
-      id: "",
-      ma_phong: "",
-      month: "",
-      electric: "",
-      water: ""
-    });
+  // RESET
+
+  const clearForm = () => {
+
+    setMaPhong("");
+    setMonth("");
+    setElectric("");
+    setWater("");
+
+    setEditId(null);
   };
+
+  useEffect(() => {
+    fetchBills();
+  }, []);
 
   return (
+
     <div className="main-container">
 
-      
+      {/* SIDEBAR */}
+
       <div className="sidebar">
+
         <h3>Thông tin</h3>
-        <div className="info-item"> Nguyễn Văn A</div>
-        <div className="info-item"> CNTT1</div>
-        <div className="info-item"> 123456</div>
+
+        <div className="info-item">
+          Nguyễn Văn A
+        </div>
+
+        <div className="info-item">
+          CNTT1
+        </div>
+
+        <div className="info-item">
+          123456
+        </div>
+
       </div>
 
-     
+      {/* CONTENT */}
+
       <div className="content">
+
         <h2>NHẬP ĐIỆN NƯỚC</h2>
 
+        {/* FORM */}
+
         <div className="form-grid">
+
           <input
             className="input-dark"
-            name="ma_phong"
             placeholder="Mã phòng"
-            value={form.ma_phong}
-            onChange={handleChange}
+            value={maPhong}
+            onChange={(e) =>
+              setMaPhong(e.target.value)
+            }
           />
 
           <input
-            className="input-dark"
             type="month"
-            name="month"
-            value={form.month}
-            onChange={handleChange}
+            className="input-dark"
+            value={month}
+            onChange={(e) =>
+              setMonth(e.target.value)
+            }
           />
 
           <input
             className="input-dark"
-            name="electric"
             placeholder="Điện"
-            value={form.electric}
-            onChange={handleChange}
+            value={electric}
+            onChange={(e) =>
+              setElectric(e.target.value)
+            }
           />
 
           <input
             className="input-dark"
-            name="water"
             placeholder="Nước"
-            value={form.water}
-            onChange={handleChange}
+            value={water}
+            onChange={(e) =>
+              setWater(e.target.value)
+            }
           />
+
         </div>
+
+        {/* BUTTON */}
 
         <div className="btn-group">
-          <button onClick={addBill}>Lưu</button>
-          <button onClick={updateBill}>Sửa</button>
-          <button onClick={deleteBill}>Xóa</button>
-          <button onClick={getBills}>Hiển thị</button>
-          <button onClick={resetForm}>Làm mới</button>
+
+          <button onClick={handleAdd}>
+            Lưu
+          </button>
+
+          <button onClick={handleUpdate}>
+            Sửa
+          </button>
+
+          <button onClick={handleDelete}>
+            Xóa
+          </button>
+
         </div>
 
+        {/* TABLE */}
+
         <div className="table-box">
+
           <table className="modern-table">
+
             <thead>
+
               <tr>
+
                 <th>Mã phòng</th>
                 <th>Tháng</th>
                 <th>Điện</th>
                 <th>Nước</th>
+
               </tr>
+
             </thead>
 
             <tbody>
-              {bills.length === 0 ? (
-                <tr>
-                  <td colSpan="4" className="empty">
-                    Chưa có dữ liệu
-                  </td>
+
+              {bills.map((bill) => (
+
+                <tr
+                  key={bill.id}
+                  onClick={() => handleSelect(bill)}
+                  style={{ cursor: "pointer" }}
+                >
+
+                  <td>{bill.ma_phong}</td>
+
+                  <td>{bill.month}</td>
+
+                  <td>{bill.electric}</td>
+
+                  <td>{bill.water}</td>
+
                 </tr>
-              ) : (
-                bills.map((b) => (
-                  <tr key={b.id} onClick={() => setForm(b)}>
-                    <td>{b.ma_phong}</td>
-                    <td>{b.month}</td>
-                    <td>{b.electric}</td>
-                    <td>{b.water}</td>
-                  </tr>
-                ))
-              )}
+
+              ))}
+
             </tbody>
+
           </table>
+
         </div>
 
       </div>
+
     </div>
   );
 }
